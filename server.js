@@ -2,7 +2,8 @@
 var connect = require('connect')
     , express = require('express')
     , io = require('socket.io')
-    , port = (process.env.PORT || 8081);
+    , port = (process.env.PORT || 8081),
+    scheduler = require('./scheduler.js');
 
 //Setup Express
 var server = express.createServer();
@@ -42,6 +43,7 @@ var io = io.listen(server);
 io.sockets.on('connection', function(socket){
   console.log('Client Connected');
   socket.on('message', function(data){
+    scheduler.setEmail(data);
     socket.broadcast.emit('server_message',data);
     socket.emit('server_message',data);
   });
@@ -60,12 +62,18 @@ io.sockets.on('connection', function(socket){
 server.get('/', function(req,res){
   res.render('index.jade', {
     locals : { 
-              title : 'Your Page Title'
-             ,description: 'Your Page Description'
-             ,author: 'Your Name'
+              title : 'Phobia crawler'
+             ,description: 'Phobia crawler'
+             ,author: 'Nailgun'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });
+});
+
+server.get('/service/settings.json', function(req, res){
+    var ret = {};
+    ret.email = scheduler.getEmail();
+    res.send(ret);
 });
 
 

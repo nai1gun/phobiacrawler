@@ -1,6 +1,6 @@
 {
-  "name": "YOUR-PROJECT-NAME-HERE",
-  "description": "YOUR PROJECT DESCRIPTION HERE",
+  "name": "PHOBIA-CRAWLER",
+  "description": "Crawler of phobia.ru",
   "author": "YOUR NAME <your@emailaddress.com>",
   "version": "0.0.1",
   "dependencies": {

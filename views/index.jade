@@ -2,5 +2,8 @@ extends layout
 
 block content
 	div
-		a(id='sender')='Send a Message'
+		span='Please enter your email'
+		br
+		input(type='email', id='email', name='email')br
+		a(id='sender', href='javascript:void(0);')='Set new email'
 		ul(id='receiver')
