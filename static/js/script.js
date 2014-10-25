@@ -2,27 +2,37 @@
 */
 
 var settings = {
-    email: null
+    email: null,
+    url: null
 };
 
 $(document).ready(function() {   
 
   var socket = io.connect();
 
-  $('#sender').bind('click', function() {
-   socket.emit('message', $('#email').val());
+  $('#save_email').bind('click', function() {
+    socket.emit('email', $('#email').val());
+  });
+
+  $('#save_url').bind('click', function() {
+    socket.emit('url', $('#url').val());
   });
 
   socket.on('server_message', function(data){
-   $('#receiver').append('<li>' + data + '</li>');  
+    $('#receiver').append('<li>' + data + '</li>');
   });
 
   $.get( "/service/settings.json", function(result) {
     settings = result;
       refreshEmail();
+      refreshUrl();
   });
 });
 
 function refreshEmail() {
     $('#email').val(settings.email);
+}
+
+function refreshUrl() {
+    $('#url').val(settings.url);
 }

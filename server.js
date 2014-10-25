@@ -42,10 +42,13 @@ server.listen( port);
 var io = io.listen(server);
 io.sockets.on('connection', function(socket){
   console.log('Client Connected');
-  socket.on('message', function(data){
+  socket.on('email', function(data){
     scheduler.setEmail(data);
-    socket.broadcast.emit('server_message',data);
-    socket.emit('server_message',data);
+    //socket.broadcast.emit('server_message',data);
+    //socket.emit('server_message',data);
+  });
+  socket.on('url', function(data){
+    scheduler.setUrl(data);
   });
   socket.on('disconnect', function(){
     console.log('Client Disconnected.');
@@ -73,6 +76,7 @@ server.get('/', function(req,res){
 server.get('/service/settings.json', function(req, res){
     var ret = {};
     ret.email = scheduler.getEmail();
+    ret.url = scheduler.getUrl();
     res.send(ret);
 });
 
