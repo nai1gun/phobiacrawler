@@ -2,19 +2,16 @@ var INTERVAL = 300000; //5 min
 
 var SCHEDULE_REGEXP = /Phobia\.Views\.Schedule\(([.\s\S]*)\).render\(\);/g;
 
-var http = require('http');
+var http = require('http'),
+    settings = require('./settings.js');
 
-var SENDGRID_USERNAME = 'app31003475@heroku.com';
+var sendgrid  = require('sendgrid')(settings.SENDGRID_USERNAME, settings.SENDGRID_PASSWORD);
 
-var SENDGRID_PASSWORD = '93lq0xvs';
-
-var sendgrid  = require('sendgrid')(SENDGRID_USERNAME, SENDGRID_PASSWORD);
-
-var email = 'djkp9ik@gmail.com';
+var email = settings.DEFAULT_EMAIL;
 
 var url = 'http://phobia.ru/30/';
 
-var lastId = 20141112;
+var lastId = null;
 
 exports.setEmail = function(newEmail) {
     console.log('Email changed from [' + email + '] to ' + newEmail);
@@ -25,11 +22,12 @@ exports.getEmail = function() {
     return email;
 };
 
-exports.setUrl = function(neWurl) {
-    if (!neWurl.match('^http(s)?:\/\/.*')) {
-        neWurl = 'http://' + neWurl;
+exports.setUrl = function(newUrl) {
+    if (!newUrl.match('^http(s)?:\/\/.*')) {
+        newUrl = 'http://' + newUrl;
     }
     url = neWurl;
+    lastId = null;
 };
 
 exports.getUrl = function() {
