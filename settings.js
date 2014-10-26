@@ -1,5 +1,5 @@
-exports.DEFAULT_EMAIL = 'djkp9ik@gmail.com';
+exports.DEFAULT_EMAIL = 'email@example.org';
 
-exports.SENDGRID_USERNAME = 'app31003475@heroku.com';
+exports.SENDGRID_USERNAME = 'email2@example.org';
 
-exports.SENDGRID_PASSWORD = '93lq0xvs';
+exports.SENDGRID_PASSWORD = 'hard_password';
